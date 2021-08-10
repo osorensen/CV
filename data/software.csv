@@ -1,0 +1,6 @@
+what;when;with;where;why
+hdme: High-Dimensional Regression with Measurement Error;2018;Sørensen Ø;https://cran.r-project.org/package=hdme;Author and maintainer
+BayesMallows: Bayesian Preference Learning with the Mallows Rank Model;2018;Sørensen Ø et al.;https://cran.r-project.org/package=BayesMallows;Author and maintainer
+metagam: Meta-Analysis of Generalized Additive Models;2020;Sørensen Ø., Brandmaier AM, and Mowinckel AM;https://cran.r-project.org/package=metagam;Author and maintainer
+BayesianLaterality: Predict Brain Asymmetry Based on Handedness and Dichotic Listening;2020;Sørensen Ø.;https://cran.r-project.org/package=BayesianLaterality;Author and maintainer
+cellmigRation: Track Cells, Analyze Cell Trajectories and Compute Migration Statistics;2021;Ghannoum S, Fantini D, Leoncio W, and Sørensen Ø;https://bioconductor.org/packages/cellmigRation/;Contributor

@@ -1,0 +1,245 @@
+---
+name: Øystein Sørensen
+position: "Associate Professor"
+address: "Department of Psychology, University of Oslo"
+www: osorensen.rbind.io
+email: oystein.sorensen@psykologi.uio.no
+twitter: SorensenOystein
+github: osorensen
+date: "`r format(Sys.time(), '%B %Y')`"
+headcolor: "000000"
+output: vitae::moderncv
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      warning = FALSE,
+                      message = FALSE)
+source("../scripts/install.R")
+```
+
+```{r get data, include=FALSE}
+## Education
+edu <- read_delim(here("data", "education.csv"), delim = ";")
+
+## Jobs
+jobs <- read_delim(here::here("data", "jobs.csv"), delim = ";")
+
+## Editorial boards
+editor <- read_delim(here::here("data", "editor.csv"), delim = ";")
+
+## Grants
+grants <- read_delim(here::here("data", "grants.csv"), delim = ";")
+
+## Papers
+get_papers <- function(bibfile){
+  bib2df::bib2df(here::here("data", bibfile)) %>% 
+    mutate(TITLE = str_remove_all(TITLE, "\\{|\\}")) %>% 
+    mutate(MONTH = if_else(is.na(MONTH), "jan", MONTH),
+      date = ymd(paste(YEAR, MONTH, "01", sep = "-"))) %>% 
+    arrange(desc(date)) %>% 
+    # put authors in one string
+    mutate(
+      author = map(AUTHOR, ~ glue_collapse(.x, sep = "; ")),
+      author = str_replace(author, "^Vidal", "{Vidal")
+      ) %>% 
+    mutate(
+      journal = if_else(is.na(JOURNAL), BOOKTITLE, JOURNAL),
+      doi = textutils::TeXencode(DOI),
+      where = ifelse(
+        !is.na(doi),
+        glue("<journal>. \\url{http://doi.org/<doi>}", .open = "<", .close = ">"),
+        journal),
+      first_author = str_detect(BIBTEXKEY, "sorensen") | 
+        str_detect(BIBTEXKEY, "vitelli2017")
+      ) %>% 
+    arrange(desc(YEAR))
+}
+
+pubs <- get_papers("publications.bib")
+preprints <- get_papers("preprints.bib")
+
+## Software
+software <- read_delim(here::here("data", "software.csv"), delim = ";") %>% 
+  arrange(desc(when))
+
+## Teaching
+teaching <- read_delim(here::here("data", "teaching.csv"), delim = ";") %>% 
+  arrange(desc(when))
+
+## Courses and workshop
+courses <- read_delim(here::here("data", "courses.csv"), delim = ";") %>% 
+  arrange(desc(when))
+
+
+## Presentations
+presentations <- read_delim(here::here("data", "presentations.csv"), delim = ";") %>% 
+  arrange(desc(when))
+
+## Other presentations
+communication <- read_delim(here::here("data", "communication.csv"), delim = ";") %>% 
+  arrange(desc(when))
+
+## Service
+service <- read_delim(here::here("data", "service.csv"), delim = ";")
+```
+
+# Education
+```{r}
+detailed_entries(edu,
+                 when = glue("{start_date}--{end_date}"),
+                 what = degree,
+                 where = loc,
+                 with = uni,
+                 why = details)
+
+```
+
+# Experience
+
+```{r research}
+jobs %>%
+  detailed_entries(
+    what = role,
+    when = glue("{start_date}--{end_date}"),
+    with = company,
+    where = where,
+    why = details)
+```
+
+# Editorial Boards
+
+```{r}
+editor %>%
+  detailed_entries(
+    what = role,
+    when = glue("{start_date}--{end_date}"),
+    with = journal
+  )
+```
+
+# Grants
+
+```{r}
+grants %>% 
+  detailed_entries(
+    what = project,
+    with = role,
+    when = glue("{start_date}--{end_date}"),
+    why = details
+  )
+```
+
+
+# Publications
+
+*See [my Google Scholar profile](https://scholar.google.com/citations?user=neOqbw0AAAAJ&hl=no) for further information.*
+\hfill\break
+
+## First Author Publications
+
+
+
+```{r}
+pubs %>% 
+  filter(first_author) %>% 
+  detailed_entries(
+    what = author,
+    when = YEAR,
+    with = TITLE,
+    where = where,
+    .protect = FALSE
+  )
+```
+
+## Non First Author Publications
+
+```{r}
+pubs %>% 
+  filter(!first_author) %>% 
+  detailed_entries(
+    what = author,
+    when = YEAR,
+    with = TITLE,
+    where = where,
+    .protect = FALSE
+  )
+```
+
+
+## Preprints
+
+```{r}
+preprints %>%
+  detailed_entries(
+    what = author,
+    when = YEAR,
+    with = TITLE,
+    where = where,
+    .protect = FALSE
+  )
+```
+
+
+
+# Software
+
+*See [my GitHub](https://github.com/osorensen/) for a complete overview of my software both released and in development.*
+\hfill\break
+
+
+```{r}
+software %>% 
+  detailed_entries(what = what, when = when, with = with, where = where, why = why)
+```
+
+
+
+
+# Teaching
+
+```{r}
+teaching %>%
+  detailed_entries(what = what, when = when, with = with, why = details, where = where)
+```
+
+
+# Courses and Workshops Organized
+
+```{r}
+courses %>%
+  detailed_entries(what = what, when = when, with = with, why = details, where = where)
+```
+
+
+# Presentations at Peer-Reviewed International Conferences
+
+```{r}
+presentations %>%
+  detailed_entries(what = what,
+                   when = when,
+                   with = with,
+                   where = where,
+                   why = why,
+                   .protect = TRUE)
+```
+
+
+# Research Communication and Other Presentations
+
+```{r}
+communication %>%
+  detailed_entries(what = what,
+                   when = when,
+                   with = with,
+                   where = where,
+                   why = why,
+                   .protect = TRUE)
+```
+
+# Service
+
+```{r}
+service %>%
+  detailed_entries(what = type, why = details)
+```
