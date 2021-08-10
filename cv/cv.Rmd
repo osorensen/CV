@@ -85,6 +85,7 @@ service <- read_delim(here::here("data", "service.csv"), delim = ";")
 ```
 
 # Education
+
 ```{r}
 detailed_entries(edu,
                  when = glue("{start_date}--{end_date}"),
