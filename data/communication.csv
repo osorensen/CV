@@ -1,4 +1,6 @@
 what;when;with;where;why;type
+"Meta analysis of non-parametric models with {metagam}";"2021";"Oslo userR! Group";"Oslo, Norway";"Slides: https://osorensen.github.io/oslo_user_metagam_2021/metagam.html";"invited presentation"
+"Get Your Results Faster With {future}";"2021";"Oslo userR! Group";"Oslo, Norway";"Recording: https://www.youtube.com/watch?v=dIjgVtuSOAc";"invited presentation"
 "Spatiotemporal Modeling of Brain Changes – Results from the Lifebrain Project";"2019";"Annual meeting of the Oslo Centre for Biostatistics and Epidemiology";"Vikersund, Norway";"Presentation of statistical methods in papers https://doi.org/10.1093/sleep/zsz280 and https://doi.org/10.1093/cercor/bhaa332";"invited presentation"
 "Spatiotemporal Modeling of Brain Changes Predicted by Sleep Quality";"2019";"University of Oslo seminar series in statistics and data science";"Oslo, Norway";"Presentation of statistical methods in papers https://doi.org/10.1093/sleep/zsz280 and https://doi.org/10.1093/cercor/bhaa332";"invited presentation"
 "Mild introduction to Rcpp: what you need to know about C++ as R user";"2019";"Oslo userR! Group";"Oslo, Norway";Slides: https://osorensen.github.io/user-rcpp-2019/presentation.html;"invited presentation"
