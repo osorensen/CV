@@ -32,8 +32,10 @@ editor <- read_delim(here::here("data", "editor.csv"), delim = ";")
 grants <- read_delim(here::here("data", "grants.csv"), delim = ";")
 
 ## Papers
-get_papers <- function(bibfile){
-  bib2df::bib2df(here::here("data", bibfile)) %>% 
+get_papers <- function(bibfile, DOI = TRUE){
+  dd <- bib2df::bib2df(here::here("data", bibfile))
+  if(!DOI) dd$DOI <- NA_character_
+  dd %>%   
     mutate(TITLE = str_remove_all(TITLE, "\\{|\\}")) %>% 
     mutate(MONTH = if_else(is.na(MONTH), "jan", MONTH),
       date = ymd(paste(YEAR, MONTH, "01", sep = "-"))) %>% 
@@ -57,7 +59,7 @@ get_papers <- function(bibfile){
 }
 
 pubs <- get_papers("publications.bib")
-preprints <- get_papers("preprints.bib")
+preprints <- get_papers("preprints.bib", DOI = FALSE)
 
 ## Software
 software <- read_delim(here::here("data", "software.csv"), delim = ";") %>% 
